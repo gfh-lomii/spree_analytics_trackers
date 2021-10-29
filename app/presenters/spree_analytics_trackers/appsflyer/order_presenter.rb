@@ -14,8 +14,6 @@ module SpreeAnalyticsTrackers
           }
         end
   
-        private
-  
         def serialize_line_item(line_item)
           {
             product_id: line_item.product_id&.to_s,
