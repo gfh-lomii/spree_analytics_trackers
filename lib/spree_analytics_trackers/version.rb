@@ -9,9 +9,9 @@ module SpreeAnalyticsTrackers
 
   module VERSION
     MAJOR = 2
-    MINOR = 1
-    TINY  = 32
-    PRE   = 'rc1'
+    MINOR = 2
+    TINY  = 0
+    PRE   = ''
 
     STRING = [MAJOR, MINOR, TINY, PRE].compact.join('.')
   end
