@@ -6,6 +6,9 @@
           newCustomer: <%= @order.user&.orders&.complete&.count == 1  %>
         }
       }
+      const eventValueObj = <%= order_json.html_safe %>;
+      eventValueObj['integrations'] = integrations;
+
       if (typeof AF !== 'undefined') {
           AF(
             'pba',
@@ -15,8 +18,7 @@
               eventName: 'order_completed',
               eventRevenue: @order.total&.to_f,
               eventRevenueCurrency: @order.currency,
-              eventValue: {'integrations': integrations},
-              eventValue: <%= order_json.html_safe %>
+              eventValue: eventValueObj
             }
           );
       }
