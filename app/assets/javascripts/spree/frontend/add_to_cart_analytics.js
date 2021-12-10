@@ -46,6 +46,28 @@ function segmentAddtoCart(variant, quantity, cartNumber) {
   });
 }
 
+function appsflyerAddtoCart(variant, quantity, cartNumber) {
+  AF(
+    'pba',
+    'event',
+    {
+      eventType: 'EVENT',
+      eventName: 'product_added',
+      eventValue: {
+        cart_id: cartNumber,
+        product_id: variant.id,
+        sku: variant.sku,
+        category: variant.category,
+        name: variant.name,
+        brand: variant.brand,
+        price: variant.price.amount,
+        currency: variant.price.currency,
+        quantity: quantity
+      }
+    }
+  );
+}
+
 Spree.ready(function(){
   $('body').on('product_add_to_cart', function(event) {
     var variant = event.variant
@@ -62,6 +84,10 @@ Spree.ready(function(){
 
     if (typeof analytics !== 'undefined') {
       segmentAddtoCart(variant, quantity, event.cart.number)
+    }
+
+    if (typeof AF !== 'undefined') {
+      appsflyerAddtoCart(variant, quantity, event.cart.number)
     }
   })
 });
