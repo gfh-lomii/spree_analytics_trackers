@@ -1,5 +1,5 @@
 <% if segment_enabled? && @order.present? && order_just_completed?(@order) %>
-  <% order_json = SpreeAnalyticsTrackers::Appflyer::OrderPresenter.new(@order).to_json %>
+  <% order_json = SpreeAnalyticsTrackers::Appsflyer::OrderPresenter.new(@order).to_json %>
   <script>
       integrations = {
         Friendbuy: {
