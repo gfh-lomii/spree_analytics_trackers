@@ -5,6 +5,6 @@
     t.AF.id=t.AF.id||i,t.AF.plugins={},o=e.createElement(n),p=e.getElementsByTagName(n)[0],o.async=1,
     o.src="https://websdk.appsflyer.com?"+(c.length>0?"st="+c.split(",").sort().join(",")+"&":"")+(i.length>0?"af_id="+i:""),
     p.parentNode.insertBefore(o,p)}(window,document,"script",0,"AF", "pba,banners",{pba: {webAppId: "<%=appsflyer_tracker.analytics_id%>"}, banners: {key: "ac7420e6-1461-4cd9-bf42-08654e845d81"}});
-    AF('banners', 'showBanner');
+    AF('banners', 'showBanner', { bannerContainerQuery: "#container-id" });
   </script>
 <% end %>
