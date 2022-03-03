@@ -14,4 +14,19 @@
     sale.setCampaignID('b0262d24');
     PostAffTracker.register();
   </script>
+  <!-- Global site tag (gtag.js) - Google Ads: 607375785 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-607375785"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-607375785', {'allow_enhanced_conversions': true});
+  </script>
+  <script>
+  window.enhanced_conversion_data = window.enhanced_conversion_data || {};
+  if (localStorage.aja_user_traits && JSON.parse(localStorage.ajs_user_traits) ){
+   console.log(JSON.parse(localStorage.ajs_user_traits).email);
+   window.enhanced_conversion_data.email = JSON.parse(localStorage.ajs_user_traits).email
+   }
+   </script>
 <% end %>
