@@ -1,6 +1,10 @@
 <% if segment_enabled? && @order.present? && order_just_completed?(@order) %>
   <% order_json = SpreeAnalyticsTrackers::Segment::OrderPresenter.new(@order).to_json %>
   <script>
+      window['friendbuy'] = window['friendbuy'] || [];
+      window['friendbuy'].push(['widget', "eL4-t0L"]);
+  </script>
+  <script>
       if (typeof analytics !== 'undefined') {
           analytics.track('Order Completed', <%= order_json.html_safe %>, { integrations: { Friendbuy: { newCustomer: <%= @order.user&.orders&.complete&.count == 1  %> }} });
       }
