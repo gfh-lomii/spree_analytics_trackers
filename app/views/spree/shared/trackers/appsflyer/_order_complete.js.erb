@@ -16,8 +16,8 @@
             {
               eventType: 'EVENT',
               eventName: 'order_completed',
-              eventRevenue: @order.total&.to_f,
-              eventRevenueCurrency: @order.currency,
+              eventRevenue: <%= @order.total&.to_f %>,
+              eventRevenueCurrency: <%= @order.currency %>,
               eventValue: eventValueObj
             }
           );
