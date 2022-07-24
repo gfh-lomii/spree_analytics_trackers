@@ -33,10 +33,10 @@
       window['friendbuy'].push(['site', 'site-b058fcef-lomi.cl']);
       window['friendbuy'].push(['track', 'customer',
       {
-          id: ("<%= spree_current_user&.id %>");,
-          email: ("<%= spree_current_user&.email %>");,
-          first_name: '',
-          last_name: ''
+          id: (!!getUserCookie('user_id') ? getUserCookie('user_id'): ''),
+          email: (!!getUserCookie('user_email') ? getUserCookie('user_email') : ''),
+          first_name: !!getUserCookie('name') ? getUserCookie('name').replace('+', ' ').split(' ')[0] : '',
+          last_name: !!getUserCookie('name') ? getUserCookie('name').replace('+', ' ').split(' ')[1] : '',
       }
       ]);
       (function (f, r, n, d, b, y) {
