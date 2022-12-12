@@ -5,8 +5,19 @@
       window['friendbuy'].push(['widget', "eL4-t0L"]);
   </script>
   <script>
+      getUserCookie = function (name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+          return decodeURIComponent(match[2]);
+        } else {
+          return '';
+        }
+      }
       if (typeof analytics !== 'undefined') {
-          analytics.track('Order Completed', <%= order_json.html_safe %>, { integrations: { Friendbuy: { newCustomer: <%= @order.user&.orders&.complete&.count == 1  %> }} });
+          analytics.track('Order Completed',
+            <%= order_json.html_safe %>,
+            userEmail: (!!getUserCookie('user_email') ? getUserCookie('user_email') : ''),
+            { integrations: { Friendbuy: { newCustomer: <%= @order.user&.orders&.complete&.count == 1  %> }} });
       }
   </script>
 <% end %>

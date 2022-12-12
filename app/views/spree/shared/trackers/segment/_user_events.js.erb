@@ -2,12 +2,24 @@
   <script>
     if (typeof analytics !== 'undefined') {
 
+      getUserCookie = function (name) {
+        var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) {
+          return decodeURIComponent(match[2]);
+        } else {
+          return '';
+        }
+      }
+
       function loginSubmitEvent() {
         analytics.track('Signed In');
       };
 
       function registrationSubmitEvent() {
-        analytics.track('Signed Up');
+        analytics.track('Signed Up', {
+          email: (!!getUserCookie('user_email') ? getUserCookie('user_email') : ''),
+          userId: (!!getUserCookie('user_id') ? getUserCookie('user_id') : ''),
+        });
       };
 
       function signOutEvent() {
