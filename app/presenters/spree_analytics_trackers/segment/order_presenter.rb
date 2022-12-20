@@ -11,6 +11,7 @@ module SpreeAnalyticsTrackers
           tax: resource.additional_tax_total&.to_f,
           discount: resource.promo_total&.to_f,
           coupon: resource.promo_code,
+          customer_email: resource.user&.email,
           currency: resource.currency,
           products: resource.line_items.map { |li| serialize_line_item(li) }
         }
