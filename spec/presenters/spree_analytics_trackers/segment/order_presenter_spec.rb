@@ -13,7 +13,7 @@ describe SpreeAnalyticsTrackers::Segment::OrderPresenter, type: :presenter do
         shipping: order.shipment_total&.to_f,
         tax: order.additional_tax_total&.to_f,
         discount: order.promo_total&.to_f,
-        coupon: order.promo_code,
+        coupon: order.promo_code || 0,
         currency: order.currency,
         products: order.line_items.map{ |line_item| 
           {
