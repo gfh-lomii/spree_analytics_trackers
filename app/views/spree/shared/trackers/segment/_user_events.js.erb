@@ -33,6 +33,15 @@
         });
       };
 
+      function sendTokenFirebase(token) {
+        if (!token) {
+          return;
+        }
+        analytics.track("Firebase Token Sent", {
+            notification_token: token
+        });
+  }
+
     }
   </script>
 <% end %>
