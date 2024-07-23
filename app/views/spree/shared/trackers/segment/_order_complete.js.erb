@@ -1,11 +1,9 @@
-<% if segment_enabled? && @order.present? %>
+
+<% if segment_enabled? && @order.present? && !@order.burned %>
   <% order_json = SpreeAnalyticsTrackers::Segment::OrderPresenter.new(@order).to_json %>
   <script>
-      window['friendbuy'] = window['friendbuy'] || [];
-      window['friendbuy'].push(['widget', "eL4-t0L"]);
-  </script>
-  <script>
-      getUserCookie = function (name) {
+    document.addEventListener("DOMContentLoaded", function() {
+      function getUserCookie(name) {
         var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
         if (match) {
           return decodeURIComponent(match[2]);
@@ -13,21 +11,33 @@
           return '';
         }
       }
-      
-      function isOrderWithinLastMinute(createdAt) {
-          var orderDate = new Date(createdAt);
-          var now = new Date();
-          var oneMinuteAgo = new Date(now.getTime() - 1 * 60 * 60 * 1000); // hace 1 minuto
-          return orderDate >= oneMinuteAgo;
-      }
-      
-      var orderCreatedAt = "<%= @order.created_at.iso8601 %>";
 
-      if (typeof analytics !== 'undefined' && isOrderWithinLastMinute(orderCreatedAt)) {
-          analytics.track('Order Completed',
-            <%= order_json.html_safe %>,
-            { email: (!!getUserCookie('user_email') ? getUserCookie('user_email') : '') },
-            { integrations: { Friendbuy: { newCustomer: <%= @order.user&.orders&.complete&.count == 1  %> }} });
+      if (typeof analytics !== 'undefined') {
+        analytics.track('Order Completed',
+          <%= order_json.html_safe %>,
+          { email: (!!getUserCookie('user_email') ? getUserCookie('user_email') : '') },
+          { integrations: { Friendbuy: { newCustomer: <%= @order.user&.orders&.complete&.count == 1  %> }} }
+        );
       }
+
+      function burnOrder() {
+          fetch('/orders/<%= @order.number %>/burn', {
+            method: 'POST'
+          })
+            .then(response => {
+            if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+            return response.json();
+          })
+            .then(data => {
+            console.log('Order marked as burned:', data);
+          })
+            .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+          });
+      }
+      burnOrder();
+    });
   </script>
 <% end %>
