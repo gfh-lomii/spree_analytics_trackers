@@ -1,4 +1,4 @@
-<% if segment_enabled? && @order.present? && @order.created_at >= 1.minute.ago  %>
+<% if segment_enabled? && @order.present? %>
   <% order_json = SpreeAnalyticsTrackers::Segment::OrderPresenter.new(@order).to_json %>
   <script>
       window['friendbuy'] = window['friendbuy'] || [];
@@ -13,7 +13,17 @@
           return '';
         }
       }
-      if (typeof analytics !== 'undefined') {
+      
+      function isOrderWithinLastMinute(createdAt) {
+          var orderDate = new Date(createdAt);
+          var now = new Date();
+          var oneMinuteAgo = new Date(now.getTime() - 1 * 60 * 1000); // hace 1 minuto
+          return orderDate >= oneMinuteAgo;
+      }
+      
+      var orderCreatedAt = "<%= @order.created_at.iso8601 %>";
+
+      if (typeof analytics !== 'undefined' && isOrderWithinLastMinute(orderCreatedAt)) {
           analytics.track('Order Completed',
             <%= order_json.html_safe %>,
             { email: (!!getUserCookie('user_email') ? getUserCookie('user_email') : '') },
