@@ -17,7 +17,7 @@
       function isOrderWithinLastMinute(createdAt) {
           var orderDate = new Date(createdAt);
           var now = new Date();
-          var oneMinuteAgo = new Date(now.getTime() - 1 * 60 * 1000); // hace 1 minuto
+          var oneMinuteAgo = new Date(now.getTime() - 1 * 60 * 60 * 1000); // hace 1 minuto
           return orderDate >= oneMinuteAgo;
       }
       
